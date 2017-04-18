@@ -23,7 +23,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
 
-public class WelcomeActivity extends RxAppCompatActivity implements HttpOnNextListener {
+public class WelcomeActivity extends BaseActivity implements HttpOnNextListener {
 
 
     private Boolean isFirst = false;
@@ -69,7 +69,7 @@ public class WelcomeActivity extends RxAppCompatActivity implements HttpOnNextLi
                 if (isFirst == true) {
                     Log.e("-------------Long",aLong.toString());
                     startActivity(new Intent(WelcomeActivity.this,GuideActivity.class));
-
+              finish();
                 } else
                     {
 

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Environment;
 
+import com.qingzu.observerPattem.ApplicationSubject;
 import com.wzgiceman.rxretrofitlibrary.retrofit_rx.RxRetrofitApp;
 import com.yjx.sharelibrary.Share;
 
@@ -27,6 +28,7 @@ public class MyApplication extends Application {
     public static boolean isFirst = false;
     public static final String JCHAT_CONFIGS = "JChat_configs";
     public static String PICTURE_DIR = "sdcard/JChatQinZu/pictures/";
+    private ApplicationSubject applicationSubject = null;
 
     @Override
     public void onCreate() {
@@ -43,5 +45,13 @@ public class MyApplication extends Application {
         Share.init("CACHE", 10 * 1024, file.toString());
     }
 
+    public ApplicationSubject getApplicationSubject() {
+        if (applicationSubject == null) {
+            applicationSubject = new ApplicationSubject();
+        }
+        return applicationSubject;
+    }
 }
+
+
 

@@ -1,6 +1,4 @@
 package com.qingzu.utils.http.tools;
-
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -2323,7 +2321,7 @@ public class Tools {
 				}
 			}
 		} catch (SocketException ex) {
-			Log.e("WifiPreference IpAddress", ex.toString());
+			//Log.e("WifiPreference IpAddress", ex.toString());
 		}
 		return null;
 	}

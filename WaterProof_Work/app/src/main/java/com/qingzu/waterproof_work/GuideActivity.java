@@ -18,7 +18,7 @@ import com.qingzu.adapter.ViewPagerAdapter;
 
 import java.util.ArrayList;
 
-public class GuideActivity extends Activity implements OnClickListener,
+public class GuideActivity extends BaseActivity implements OnClickListener,
 		OnPageChangeListener {
 	// 定义ViewPager对象
 	private ViewPager viewPager = null;

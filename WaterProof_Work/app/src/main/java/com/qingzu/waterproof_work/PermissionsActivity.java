@@ -20,7 +20,7 @@ import com.qingzu.custom.control.PermissionsChecker;
  * <p/>
  * Created by wangchenlong on 16/1/26.
  */
-public class PermissionsActivity extends AppCompatActivity {
+public class PermissionsActivity extends BaseActivity {
 
     public static final int PERMISSIONS_GRANTED = 0; // 权限授权
     public static final int PERMISSIONS_DENIED = 1; // 权限拒绝
