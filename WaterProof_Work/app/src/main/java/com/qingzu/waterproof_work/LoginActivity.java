@@ -7,6 +7,7 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.Toast;
 
+import com.qingzu.entity.api.CheckByCellPhone;
 import com.qingzu.entity.api.LoginPost;
 import com.qingzu.entity.resulte.InterfaceReturn;
 import com.qingzu.entity.resulte.LoginMember;
@@ -26,15 +27,16 @@ public class LoginActivity extends BaseActivity implements HttpOnNextListener {
     private HttpManager manager = null;
     private LoginPost loginPost = null;
     private ActivityLoginBinding activityLoginBinding = null;
-
+    private CheckByCellPhone checkByCellPhone =null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityLoginBinding = DataBindingUtil.setContentView(this,R.layout.activity_login);
+        IntiView();
     }
     private void IntiView() {
         manager = new HttpManager(this, this);
-        loginPost = new LoginPost(this);
+           loginPost = new LoginPost(this);
         //  SparseArray SparseArray
         //   Map<String,Object>map1 =new　SparseArray;
         Map<String, Object> map = new HashMap<String, Object>();
@@ -70,6 +72,9 @@ public class LoginActivity extends BaseActivity implements HttpOnNextListener {
                         } else {
 //                            getCheckByCellPhone(login_et_phone_number.getText()
 //                                    .toString().trim());
+                            checkByCellPhone=new CheckByCellPhone(LoginActivity.this);
+                            checkByCellPhone.setCellPhone(activityLoginBinding.loginEtPhoneNumber.getText().toString().trim());
+                            manager.doHttpDeal(checkByCellPhone);
                         }
 
                         break;
@@ -132,7 +137,7 @@ public class LoginActivity extends BaseActivity implements HttpOnNextListener {
 
                 }
             }
-        }
+        }//else if (checkByCellPhone.getMethod())
     }
 
 
