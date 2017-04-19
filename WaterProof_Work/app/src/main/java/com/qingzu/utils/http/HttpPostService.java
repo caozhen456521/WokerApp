@@ -8,6 +8,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -19,9 +20,13 @@ public interface HttpPostService {
 @GET("api/User/RefreshToken")
     Observable<String>getMember(@Header("EZFSToken") String e);
 
-@FormUrlEncoded
-@POST("api/User/Logon/ByPwd")
+  @FormUrlEncoded
+  @POST("api/User/Logon/ByPwd")
     Observable<String>PostLoginMember(@Header("EZFSToken") String e, @FieldMap Map<String, Object> map);
+
+
+    @POST("api/User/CheckByCellPhone/{cellPhone}")
+    Observable<String>CheckByCellPhone(@Header("EZFSToken") String e, @Query("{cellPhone}") String cellPhone);
 
 //  @POST("AppFiftyToneGraph/videoLink")
 //    Call<RetrofitEntity> getAllVedio(@Header("EZFSToken") String EZFSToken, @Body boolean once_no);

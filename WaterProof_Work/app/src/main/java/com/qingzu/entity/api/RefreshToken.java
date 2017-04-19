@@ -4,6 +4,7 @@ import com.qingzu.utils.http.HttpPostService;
 import com.qingzu.utils.http.tools.SPUtils;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.wzgiceman.rxretrofitlibrary.retrofit_rx.Api.BaseApi;
+import com.yjx.sharelibrary.Share;
 
 import retrofit2.Retrofit;
 import rx.Observable;
@@ -24,8 +25,8 @@ public class RefreshToken extends BaseApi {
 
     @Override
     public Observable getObservable(Retrofit retrofit) {
-        String UserToken = (String) SPUtils.get(rxAppCompatActivity.getApplication(), "UserToken", "");
+      //  String UserToken = (String) SPUtils.get(rxAppCompatActivity.getApplication(), "UserToken", "");
         HttpPostService postService = retrofit.create(HttpPostService.class);
-        return postService.getMember(UserToken);
+        return postService.getMember(Share.getString("UserToken",""));
     }
 }
