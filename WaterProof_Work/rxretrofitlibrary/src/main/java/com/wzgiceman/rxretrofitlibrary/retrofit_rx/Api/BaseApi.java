@@ -75,6 +75,7 @@ public abstract class BaseApi {
     }
 
     public void setBaseUrl(String baseUrl) {
+
         this.baseUrl = baseUrl;
     }
 
@@ -89,6 +90,9 @@ public abstract class BaseApi {
     public void setCache(boolean cache) {
         this.cache = cache;
     }
+
+
+
 
     public boolean isShowProgress() {
         return showProgress;

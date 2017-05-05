@@ -1,5 +1,6 @@
 package com.qingzu.waterproof_work;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import android.support.annotation.Nullable;
@@ -17,12 +18,13 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 public class BaseActivity extends RxAppCompatActivity implements Observer {
 
     public MyApplication myApplication = null;
-
+    public Context mContext =null;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         myApplication = (MyApplication) this.getApplication();
         myApplication.getApplicationSubject().addObserver(this);
+        mContext=this;
     }
 
     @Override

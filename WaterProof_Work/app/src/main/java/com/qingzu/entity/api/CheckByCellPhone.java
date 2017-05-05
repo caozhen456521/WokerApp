@@ -1,6 +1,7 @@
 package com.qingzu.entity.api;
 
 import com.qingzu.utils.http.HttpPostService;
+import com.qingzu.utils.http.tools.Tools;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.wzgiceman.rxretrofitlibrary.retrofit_rx.Api.BaseApi;
 import com.yjx.sharelibrary.Share;
@@ -21,6 +22,7 @@ public class CheckByCellPhone extends BaseApi {
     public  CheckByCellPhone (RxAppCompatActivity rxAppCompatActivity){
         this.rxAppCompatActivity=rxAppCompatActivity;
         setMethod("api/User/CheckByCellPhone/{cellPhone}");
+        setShowProgress(false);
     }
 
     public String getCellPhone(){
@@ -33,6 +35,6 @@ public class CheckByCellPhone extends BaseApi {
     @Override
     public Observable getObservable(Retrofit retrofit) {
         HttpPostService postService =retrofit.create(HttpPostService.class);
-        return postService.CheckByCellPhone(Share.getString("UserToken",""),getCellPhone());
+        return postService.CheckByCellPhone(Tools.getEZFSToken(Share.getString("UserToken","")),getCellPhone());
     }
 }

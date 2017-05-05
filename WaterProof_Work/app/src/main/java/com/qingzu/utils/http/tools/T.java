@@ -1,4 +1,4 @@
-package com.qingzu.utils.tools;
+package com.qingzu.utils.http.tools;
 
 import android.content.Context;
 import android.os.Build;

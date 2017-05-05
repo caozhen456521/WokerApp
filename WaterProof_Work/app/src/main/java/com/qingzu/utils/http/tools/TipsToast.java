@@ -1,4 +1,4 @@
-package com.qingzu.utils.tools;
+package com.qingzu.utils.http.tools;
 import com.qingzu.waterproof_work.R;
 
 import android.content.Context;
