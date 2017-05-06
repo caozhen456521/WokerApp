@@ -1,4 +1,6 @@
 package com.qingzu.waterproof_work;
+
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -13,18 +15,17 @@ import com.qingzu.entity.api.CheckByCellPhone;
 import com.qingzu.entity.api.LoginPost;
 import com.qingzu.entity.resulte.InterfaceReturn;
 import com.qingzu.entity.resulte.LoginMember;
+import com.qingzu.utils.http.tools.T;
 import com.qingzu.utils.http.tools.Tools;
 import com.qingzu.waterproof_work.databinding.ActivityLoginBinding;
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
-import com.wzgiceman.rxretrofitlibrary.retrofit_rx.RxRetrofitApp;
 import com.wzgiceman.rxretrofitlibrary.retrofit_rx.downlaod.DownInfo;
 import com.wzgiceman.rxretrofitlibrary.retrofit_rx.downlaod.HttpDownManager;
 import com.wzgiceman.rxretrofitlibrary.retrofit_rx.exception.ApiException;
 import com.wzgiceman.rxretrofitlibrary.retrofit_rx.http.HttpManager;
-import com.wzgiceman.rxretrofitlibrary.retrofit_rx.listener.HttpDownOnNextListener;
 import com.wzgiceman.rxretrofitlibrary.retrofit_rx.listener.HttpOnNextListener;
 import com.wzgiceman.rxretrofitlibrary.retrofit_rx.utils.DbDwonUtil;
 import com.yjx.sharelibrary.Share;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,41 +33,30 @@ import java.util.concurrent.TimeUnit;
 
 import rx.functions.Action1;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
-import static com.qingzu.waterproof_work.R.id.login_et_phone_number;
-
 
 public class LoginActivity extends BaseActivity implements HttpOnNextListener {
     private HttpManager manager = null;
     private LoginPost loginPost = null;
     private ActivityLoginBinding activityLoginBinding = null;
-    private CheckByCellPhone checkByCellPhone =null;
-    private HttpDownManager downManager =null;
-    private  DownInfo apkApi =null;
-    private DbDwonUtil dbUtil =null;
-    private List<DownInfo> listData=null;
-    private DownFile downFile =null;
+    private CheckByCellPhone checkByCellPhone = null;
+    private HttpDownManager downManager = null;
+    private DownInfo apkApi = null;
+    private DbDwonUtil dbUtil = null;
+    private List<DownInfo> listData = null;
+    private DownFile downFile = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityLoginBinding = DataBindingUtil.setContentView(this,R.layout.activity_login);
-        dbUtil= DbDwonUtil.getInstance();
+        Tools.setNavigationBarColor(this, R.color.title_background_black);
+        activityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        dbUtil = DbDwonUtil.getInstance();
         IntiView();
     }
+
     private void IntiView() {
         manager = new HttpManager(this, this);
-      //  Share.remove("UserToken");
-           loginPost = new LoginPost(this);
-        //  SparseArray SparseArray
-        //   Map<String,Object>map1 =new　SparseArray;
-//        Map<String, Object> map = new HashMap<String, Object>();
-//        map.put("UserName", "18698562507");
-//        map.put("UserPwd", "123456");
-//        loginPost.setMapData(map);
-//        manager.doHttpDeal(loginPost);
-
-        final ScaleAnimation animation =new ScaleAnimation(1f, 1.4f, 1f, 1.4f,
+        final ScaleAnimation animation = new ScaleAnimation(1f, 1.4f, 1f, 1.4f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         animation.setDuration(5000);//设置动画持续时间
         animation.setRepeatCount(0);
@@ -74,16 +64,32 @@ public class LoginActivity extends BaseActivity implements HttpOnNextListener {
         activityLoginBinding.LoginRe.setAnimation(animation);
         animation.startNow();
 
-//        RxView.clickEvents(activityLoginBinding.loginEtPhoneNumber)
-//                .throttleFirst(500, TimeUnit.MILLISECONDS)
-//                .subscribe(clickAction);
-        RxView.clicks(activityLoginBinding.loginBtCommit). throttleFirst(1, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
+/**
+ * 登录 按钮
+ */
+        RxView.clicks(activityLoginBinding.loginBtCommit).throttleFirst(300, TimeUnit.MILLISECONDS).subscribe(new Action1<Void>() {
             @Override
             public void call(Void aVoid) {
-                loginPost = new LoginPost(LoginActivity.this);
+
+                if (activityLoginBinding.loginEtPhoneNumber.getText().toString().trim() != null || activityLoginBinding.loginEtPhoneNumber.getText().toString().trim().equals("")) {
+                                                             T.showToast(mContext, "密码不能为空");
+                    return;
+                } else {
+                    loginPost = new LoginPost(mContext);
+                    Map<String, Object> map = new HashMap<String, Object>();
+                    map.put("UserName", activityLoginBinding.loginEtPhoneNumber.getText().toString().trim());
+                    map.put("UserPwd", activityLoginBinding.loginEtPassword.getText().toString().trim());
+                    loginPost.setMapData(map);
+                    manager.doHttpDeal(loginPost);
+                }
             }
         });
 
+        RxView.clicks(activityLoginBinding.smsLoginTv).throttleFirst(300, TimeUnit.MILLISECONDS).subscribe(new Action1<Void>() {
+            @Override
+            public void call(Void aVoid) {
+           //      startActivity(new Intent(mContext,));
+            }});
         activityLoginBinding.loginEtPassword.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -102,7 +108,7 @@ public class LoginActivity extends BaseActivity implements HttpOnNextListener {
                         } else {
 //                            getCheckByCellPhone(login_et_phone_number.getText()
 //                                    .toString().trim());
-                            checkByCellPhone=new CheckByCellPhone((RxAppCompatActivity) mContext);
+                            checkByCellPhone = new CheckByCellPhone(mContext);
                             checkByCellPhone.setCellPhone(activityLoginBinding.loginEtPhoneNumber.getText().toString().trim());
                             manager.doHttpDeal(checkByCellPhone);
                         }
@@ -167,7 +173,7 @@ public class LoginActivity extends BaseActivity implements HttpOnNextListener {
 
                 }
             }
-        }else if (method.equals(checkByCellPhone.getMethod())){
+        } else if (method.equals(checkByCellPhone.getMethod())) {
             InterfaceReturn interfaceReturn = new InterfaceReturn();
             interfaceReturn = InterfaceReturn.fromJsonModel(resulte);
             if (interfaceReturn != null) {
@@ -180,16 +186,16 @@ public class LoginActivity extends BaseActivity implements HttpOnNextListener {
 
                 }
             }
-        };
+        }
+        ;
     }
 
 
     @Override
     public void onError(ApiException e) {
 
-      //  activityLoginBinding.tvMsg.setText("失败：\ncode=" + e.getCode() + "\nmsg:" + e.getDisplayMessage());
+        //  activityLoginBinding.tvMsg.setText("失败：\ncode=" + e.getCode() + "\nmsg:" + e.getDisplayMessage());
     }
-
 
 
 }

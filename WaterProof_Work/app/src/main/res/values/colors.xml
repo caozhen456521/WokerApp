@@ -172,7 +172,7 @@
     <color name="my_lightgray"> #808080  </color> <!-- 布局中浅字体颜色 -->
     <color name="title_font_color">#ffffff</color> <!-- 头标题的字体颜色 -->
     <color name="title_background_blue">#158AFF</color> <!-- 头标题的背景颜色(蓝) -->
-    <color name="title_background_black">#158AFF</color> <!-- 头标题的背景颜色(黑) -->
+    <color name="title_background_black">#383b3d</color> <!-- 头标题的背景颜色(黑) -->
     <color name="comment_color">#2da6e8</color>
     <color name="layout_background">#f8f8f8</color> <!-- 各布局中的背景颜色 -->
     <color name="tintblue">#FF35D2FE</color>

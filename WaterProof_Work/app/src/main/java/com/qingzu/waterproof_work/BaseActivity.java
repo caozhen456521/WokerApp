@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import com.qingzu.Application.MyApplication;
 import com.qingzu.observerPattem.Observer;
 import com.qingzu.observerPattem.Subject;
+import com.qingzu.utils.http.tools.Tools;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 /**
@@ -18,12 +19,13 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 public class BaseActivity extends RxAppCompatActivity implements Observer {
 
     public MyApplication myApplication = null;
-    public Context mContext =null;
+    public RxAppCompatActivity mContext =null;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         myApplication = (MyApplication) this.getApplication();
         myApplication.getApplicationSubject().addObserver(this);
+        Tools.setNavigationBarColor(this, R.color.title_background_blue);
         mContext=this;
     }
 
